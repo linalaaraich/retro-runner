@@ -72,53 +72,50 @@ const COL = {
 // 0=air 1=ground 2=brick 3=?block(coin) 4=pipe 5=flag
 // Level is wider than screen — camera follows player
 const LEVELS = [
-  // ── Level 1: Gentle intro ──
-  // Platforms: 12, 10, 14, 12, 10, 16  Gaps: 2, 2, 2, 3, 2
-  [
-    '                                                                                F',
-    '                                                                                |',
-    '                                                                                |',
-    '                                                                                |',
-    '                                                                                |',
-    '           CC                    CCC                         CC                  |',
-    '                               QBQ                                              |',
-    '                                                                                |',
-    '                  BBB                            BBQ                             |',
-    '        E                P          E                  P          E              |',
-    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
-    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
-  ],
-  // ── Level 2: Getting harder ──
-  // Platforms: 10, 8, 12, 10, 8, 14  Gaps: 2, 3, 2, 3, 2
-  [
-    '                                                                                      F',
-    '                                                                                      |',
-    '                                                                                      |',
-    '                                                                                      |',
-    '          CC                       C C                            CC                   |',
-    '                    CCC                          CCC                                   |',
-    '                   QBQ                          QBQ                                    |',
-    '                                                                                      |',
-    '              BBB                        BBB                  BBQ                      |',
-    '      E              P       E                P        E                E              |',
-    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
-    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
-  ],
-  // ── Level 3: The gauntlet ──
-  // Platforms: 8, 7, 10, 8, 7, 8, 18  Gaps: 2, 3, 3, 3, 2, 3
+  // ── Level 1: Tutorial — learn to run, jump, stomp ──
   [
     '                                                                                              F',
     '                                                                                              |',
     '                                                                                              |',
     '                                                                                              |',
-    '         CC                  C C                       CC                  CC                  |',
-    '                   CCC                    CCC                   CCC                            |',
-    '                  QBQ                    QBQ                   QBQ                             |',
     '                                                                                              |',
-    '             BBB                   BBB                  BBQ                BBB                 |',
-    '     E            P     E               P     E              P      E           E             |',
-    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
-    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    '               CC            CC                  CCC                       CC                  |',
+    '                                                QBQ                                           |',
+    '                                                                                              |',
+    '                                   BBB                          BBQ                            |',
+    '                                             E          P              E                      |',
+    'GGGGGGGGGGGGGGGG GGGGGGGGGGGGG  GGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGGGGGG GGGGGGGGGGGGG  GGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+  ],
+  // ── Level 2: Pipes and pits ──
+  [
+    '                                                                                                    F',
+    '                                                                                                    |',
+    '                                                                                                    |',
+    '                                                                                                    |',
+    '                CC                    C C                         CCC                                |',
+    '                              CCC                    CCC                                             |',
+    '                             QBQ                    QBQ                                              |',
+    '                                                                                                    |',
+    '                    BBB                      BBB                       BBQ                           |',
+    '          E              P          E              P          E               P         E            |',
+    'GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGGGG  GGGGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGGGG  GGGGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGG',
+  ],
+  // ── Level 3: The gauntlet ──
+  [
+    '                                                                                                            F',
+    '                                                                                                            |',
+    '                                                                                                            |',
+    '                                                                                                            |',
+    '               CC                 C C                    CC                    CCC                           |',
+    '                          CCC                  CCC                    CCC                                    |',
+    '                         QBQ                  QBQ                   QBQ                                      |',
+    '                                                                                                            |',
+    '                   BBB                  BBB                  BBQ                  BBB                        |',
+    '         E              P       E             P       E              P       E             E                 |',
+    'GGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGG',
   ],
 ];
 
@@ -271,11 +268,11 @@ function update() {
     return;
   }
 
-  const accel = 0.5;
-  const friction = 0.82;
-  const maxSpeed = 4.5;
-  const gravity = 0.55;
-  const jumpForce = -10;
+  const accel = 0.65;
+  const friction = 0.88;
+  const maxSpeed = 5;
+  const gravity = 0.5;
+  const jumpForce = -10.5;
 
   // Input
   if (keys['ArrowLeft'] || keys['KeyA']) { player.vx -= accel; player.facing = -1; }

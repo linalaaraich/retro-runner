@@ -23,46 +23,46 @@ function isSolid(t) {
 
 const LEVELS = [
   [
-    '                                                                                F',
-    '                                                                                |',
-    '                                                                                |',
-    '                                                                                |',
-    '                                                                                |',
-    '           CC                    CCC                         CC                  |',
-    '                               QBQ                                              |',
-    '                                                                                |',
-    '                  BBB                            BBQ                             |',
-    '        E                P          E                  P          E              |',
-    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
-    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
-  ],
-  [
-    '                                                                                      F',
-    '                                                                                      |',
-    '                                                                                      |',
-    '                                                                                      |',
-    '          CC                       C C                            CC                   |',
-    '                    CCC                          CCC                                   |',
-    '                   QBQ                          QBQ                                    |',
-    '                                                                                      |',
-    '              BBB                        BBB                  BBQ                      |',
-    '      E              P       E                P        E                E              |',
-    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
-    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
-  ],
-  [
     '                                                                                              F',
     '                                                                                              |',
     '                                                                                              |',
     '                                                                                              |',
-    '         CC                  C C                       CC                  CC                  |',
-    '                   CCC                    CCC                   CCC                            |',
-    '                  QBQ                    QBQ                   QBQ                             |',
     '                                                                                              |',
-    '             BBB                   BBB                  BBQ                BBB                 |',
-    '     E            P     E               P     E              P      E           E             |',
-    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
-    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    '               CC            CC                  CCC                       CC                  |',
+    '                                                QBQ                                           |',
+    '                                                                                              |',
+    '                                   BBB                          BBQ                            |',
+    '                                             E          P              E                      |',
+    'GGGGGGGGGGGGGGGG GGGGGGGGGGGGG  GGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGGGGGG GGGGGGGGGGGGG  GGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+  ],
+  [
+    '                                                                                                    F',
+    '                                                                                                    |',
+    '                                                                                                    |',
+    '                                                                                                    |',
+    '                CC                    C C                         CCC                                |',
+    '                              CCC                    CCC                                             |',
+    '                             QBQ                    QBQ                                              |',
+    '                                                                                                    |',
+    '                    BBB                      BBB                       BBQ                           |',
+    '          E              P          E              P          E               P         E            |',
+    'GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGGGG  GGGGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGGGG  GGGGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGG',
+  ],
+  [
+    '                                                                                                            F',
+    '                                                                                                            |',
+    '                                                                                                            |',
+    '                                                                                                            |',
+    '               CC                 C C                    CC                    CCC                           |',
+    '                          CCC                  CCC                    CCC                                    |',
+    '                         QBQ                  QBQ                   QBQ                                      |',
+    '                                                                                                            |',
+    '                   BBB                  BBB                  BBQ                  BBB                        |',
+    '         E              P       E             P       E              P       E             E                 |',
+    'GGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGG',
   ],
 ];
 
@@ -124,7 +124,7 @@ for (let i = 0; i < LEVELS.length; i++) {
   let py = playerStartY, vy = 0;
   let landed = false;
   for (let frame = 0; frame < 120; frame++) {
-    vy += 0.55;
+    vy += 0.5;
     if (vy > 12) vy = 12;
     py += vy;
 
@@ -209,10 +209,10 @@ for (let i = 0; i < LEVELS.length; i++) {
   }
 
   // Max jump distance: airtime * maxSpeed
-  // jumpForce = -10, gravity = 0.55, maxSpeed = 4.5
-  // airtime = 2 * 10 / 0.55 ≈ 36.4 frames
-  // distance = 36.4 * 4.5 ≈ 163.6 px
-  const maxJumpDist = 163;
+  // jumpForce = -10.5, gravity = 0.5, maxSpeed = 5
+  // airtime = 2 * 10.5 / 0.5 = 42 frames
+  // distance = 42 * 5 = 210 px
+  const maxJumpDist = 210;
 
   assert(maxGap < maxJumpDist, `Level ${i+1}: max gap ${maxGap}px < max jump ${maxJumpDist}px`);
 }
@@ -287,11 +287,11 @@ console.log('\n== Gameplay Simulation (300 frames) ==');
 
   for (let frame = 0; frame < 300; frame++) {
     // Hold right
-    p.vx += 0.5;
-    p.vx *= 0.82;
-    if (p.vx > 4.5) p.vx = 4.5;
+    p.vx += 0.65;
+    p.vx *= 0.88;
+    if (p.vx > 5) p.vx = 5;
 
-    p.vy += 0.55;
+    p.vy += 0.5;
     if (p.vy > 12) p.vy = 12;
 
     // Move X
@@ -325,7 +325,7 @@ console.log('\n== Gameplay Simulation (300 frames) ==');
       const hasFloor = tiles.some(t => isSolid(t) && aheadX >= t.x && aheadX < t.x+T && Math.abs((p.y+p.h)-t.y) < 8);
       const hasWall = tiles.some(t => isSolid(t) && aheadX >= t.x && aheadX < t.x+T && p.y < t.y+T && p.y+p.h > t.y);
       if (!hasFloor || hasWall) {
-        p.vy = -10;
+        p.vy = -10.5;
         p.onGround = false;
       }
     }

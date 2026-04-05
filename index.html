@@ -72,50 +72,53 @@ const COL = {
 // 0=air 1=ground 2=brick 3=?block(coin) 4=pipe 5=flag
 // Level is wider than screen — camera follows player
 const LEVELS = [
-  // Level 1
+  // ── Level 1: Gentle intro ──
+  // Platforms: 12, 10, 14, 12, 10, 16  Gaps: 2, 2, 2, 3, 2
   [
-    '                                                                                    F',
-    '                                                                                    |',
-    '                                                                                    |',
-    '                                                                                    |',
-    '                  CCC                                                               |',
-    '                                     C C C                                          |',
-    '         C                  BBQ             C                                       |',
-    '                                                       C C                          |',
-    '              BBB                                  BBQ                    QBQ        |',
-    '   P                  PP              PP                      PP                    |',
-    'GGGGGGGGGGGG    GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGG  GGGGGGGGGGGGGG',
-    'GGGGGGGGGGGG    GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGG  GGGGGGGGGGGGGG',
+    '                                                                                F',
+    '                                                                                |',
+    '                                                                                |',
+    '                                                                                |',
+    '                                                                                |',
+    '           CC                    CCC                         CC                  |',
+    '                               QBQ                                              |',
+    '                                                                                |',
+    '                  BBB                            BBQ                             |',
+    '        E                P          E                  P          E              |',
+    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
   ],
-  // Level 2
+  // ── Level 2: Getting harder ──
+  // Platforms: 10, 8, 12, 10, 8, 14  Gaps: 2, 3, 2, 3, 2
   [
-    '                                                                                          F',
-    '                                                                                          |',
-    '                                                                                          |',
-    '       C C                                C                                               |',
-    '                  Q                                    CCC                                 |',
-    '            BBB         C C C                                                              |',
-    '    C                          QBQ              BBB          C C                            |',
-    '        PP                                                         QBQ                     |',
-    '              C    PP              BBQ     PP          BBBBB              PP                |',
-    '  P                      PP                                                                |',
-    'GGGGGGG   GGGGG    GGGGGGGGGG   GGGGGGGG    GGGGGGGGGGGGGGG    GGGG   GGGGGGGGGGGGGGGGGGGGGGG',
-    'GGGGGGG   GGGGG    GGGGGGGGGG   GGGGGGGG    GGGGGGGGGGGGGGG    GGGG   GGGGGGGGGGGGGGGGGGGGGGG',
+    '                                                                                      F',
+    '                                                                                      |',
+    '                                                                                      |',
+    '                                                                                      |',
+    '          CC                       C C                            CC                   |',
+    '                    CCC                          CCC                                   |',
+    '                   QBQ                          QBQ                                    |',
+    '                                                                                      |',
+    '              BBB                        BBB                  BBQ                      |',
+    '      E              P       E                P        E                E              |',
+    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
   ],
-  // Level 3
+  // ── Level 3: The gauntlet ──
+  // Platforms: 8, 7, 10, 8, 7, 8, 18  Gaps: 2, 3, 3, 3, 2, 3
   [
-    '                                                                                                F',
-    '                                                                                                |',
-    '                                                                                                |',
-    '          C                             C C C                                                   |',
-    '                Q        C                         C                                            |',
-    '    C        BBB    BB        QBQ                        QBQ           C C                       |',
-    '                                                BB                          BBQ                 |',
-    '              BBB        BBB          BBB              BBB        BBB                BBB         |',
-    '                              BB              BB                     BBBBB              BB      |',
-    'P            P                    P                P                    P                       |',
-    'GGGG  GGG   GGGG   GGG   GGGGGGG  GGGG   GGGGG   GGGGG  GGGGG   GGGGGGG   GGGG  GGGGGGGGGGGGGGG',
-    'GGGG  GGG   GGGG   GGG   GGGGGGG  GGGG   GGGGG   GGGGG  GGGGG   GGGGGGG   GGGG  GGGGGGGGGGGGGGG',
+    '                                                                                              F',
+    '                                                                                              |',
+    '                                                                                              |',
+    '                                                                                              |',
+    '         CC                  C C                       CC                  CC                  |',
+    '                   CCC                    CCC                   CCC                            |',
+    '                  QBQ                    QBQ                   QBQ                             |',
+    '                                                                                              |',
+    '             BBB                   BBB                  BBQ                BBB                 |',
+    '     E            P     E               P     E              P      E           E             |',
+    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
   ],
 ];
 
@@ -171,11 +174,11 @@ function loadLevel(n) {
       else if (ch === 'Q') tiles.push({ x: px, y: py, type: 'qblock', active: true });
       else if (ch === 'C') coins.push({ x: px + 8, y: py + 4, w: 16, h: 24, alive: true, bobOff: Math.random() * Math.PI * 2 });
       else if (ch === 'P') {
-        // pipe has a walking enemy on top going left
         tiles.push({ x: px, y: py, type: 'pipe_top' });
         tiles.push({ x: px, y: py + T, type: 'pipe_body' });
-        // spawn enemy near pipe
-        enemies.push({ x: px + T * 2, y: py - 24, vx: -1, vy: 0, w: 24, h: 24, alive: true, stomped: false, stompTimer: 0 });
+      }
+      else if (ch === 'E') {
+        enemies.push({ x: px, y: py, vx: -1, vy: 0, w: 24, h: 24, alive: true, stomped: false, stompTimer: 0 });
       }
       else if (ch === 'F') flagX = px;
       else if (ch === '|') tiles.push({ x: px, y: py, type: 'flagpole' });

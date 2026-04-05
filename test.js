@@ -23,46 +23,46 @@ function isSolid(t) {
 
 const LEVELS = [
   [
-    '                                                                                    F',
-    '                                                                                    |',
-    '                                                                                    |',
-    '                                                                                    |',
-    '                  CCC                                                               |',
-    '                                     C C C                                          |',
-    '         C                  BBQ             C                                       |',
-    '                                                       C C                          |',
-    '              BBB                                  BBQ                    QBQ        |',
-    '   P                  PP              PP                      PP                    |',
-    'GGGGGGGGGGGG    GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGG  GGGGGGGGGGGGGG',
-    'GGGGGGGGGGGG    GGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGG  GGGGGGGGGGGGGG',
+    '                                                                                F',
+    '                                                                                |',
+    '                                                                                |',
+    '                                                                                |',
+    '                                                                                |',
+    '           CC                    CCC                         CC                  |',
+    '                               QBQ                                              |',
+    '                                                                                |',
+    '                  BBB                            BBQ                             |',
+    '        E                P          E                  P          E              |',
+    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
+    'GGGGGGGGGGGG  GGGGGGGGGG  GGGGGGGGGGGGGG  GGGGGGGGGGGG   GGGGGGGGGG  GGGGGGGGGGGGGGGG',
   ],
   [
-    '                                                                                          F',
-    '                                                                                          |',
-    '                                                                                          |',
-    '       C C                                C                                               |',
-    '                  Q                                    CCC                                 |',
-    '            BBB         C C C                                                              |',
-    '    C                          QBQ              BBB          C C                            |',
-    '        PP                                                         QBQ                     |',
-    '              C    PP              BBQ     PP          BBBBB              PP                |',
-    '  P                      PP                                                                |',
-    'GGGGGGG   GGGGG    GGGGGGGGGG   GGGGGGGG    GGGGGGGGGGGGGGG    GGGG   GGGGGGGGGGGGGGGGGGGGGGG',
-    'GGGGGGG   GGGGG    GGGGGGGGGG   GGGGGGGG    GGGGGGGGGGGGGGG    GGGG   GGGGGGGGGGGGGGGGGGGGGGG',
+    '                                                                                      F',
+    '                                                                                      |',
+    '                                                                                      |',
+    '                                                                                      |',
+    '          CC                       C C                            CC                   |',
+    '                    CCC                          CCC                                   |',
+    '                   QBQ                          QBQ                                    |',
+    '                                                                                      |',
+    '              BBB                        BBB                  BBQ                      |',
+    '      E              P       E                P        E                E              |',
+    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGGGG  GGGGGGGG   GGGGGGGGGGGG  GGGGGGGGGG   GGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGG',
   ],
   [
-    '                                                                                                F',
-    '                                                                                                |',
-    '                                                                                                |',
-    '          C                             C C C                                                   |',
-    '                Q        C                         C                                            |',
-    '    C        BBB    BB        QBQ                        QBQ           C C                       |',
-    '                                                BB                          BBQ                 |',
-    '              BBB        BBB          BBB              BBB        BBB                BBB         |',
-    '                              BB              BB                     BBBBB              BB      |',
-    'P            P                    P                P                    P                       |',
-    'GGGG  GGG   GGGG   GGG   GGGGGGG  GGGG   GGGGG   GGGGG  GGGGG   GGGGGGG   GGGG  GGGGGGGGGGGGGGG',
-    'GGGG  GGG   GGGG   GGG   GGGGGGG  GGGG   GGGGG   GGGGG  GGGGG   GGGGGGG   GGGG  GGGGGGGGGGGGGGG',
+    '                                                                                              F',
+    '                                                                                              |',
+    '                                                                                              |',
+    '                                                                                              |',
+    '         CC                  C C                       CC                  CC                  |',
+    '                   CCC                    CCC                   CCC                            |',
+    '                  QBQ                    QBQ                   QBQ                             |',
+    '                                                                                              |',
+    '             BBB                   BBB                  BBQ                BBB                 |',
+    '     E            P     E               P     E              P      E           E             |',
+    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+    'GGGGGGGG  GGGGGGG   GGGGGGGGGG   GGGGGGGG   GGGGGGG  GGGGGGGG   GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
   ],
 ];
 
@@ -84,7 +84,9 @@ function loadLevel(n) {
       else if (ch === 'P') {
         tiles.push({ x: px, y: py, type: 'pipe_top' });
         tiles.push({ x: px, y: py + T, type: 'pipe_body' });
-        enemies.push({ x: px + T * 2, y: py - 24, vx: -1, vy: 0, w: 24, h: 24, alive: true, stomped: false });
+      }
+      else if (ch === 'E') {
+        enemies.push({ x: px, y: py, vx: -1, vy: 0, w: 24, h: 24, alive: true, stomped: false });
       }
       else if (ch === 'F') flagX = px;
       else if (ch === '|') tiles.push({ x: px, y: py, type: 'flagpole' });

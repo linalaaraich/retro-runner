@@ -111,9 +111,9 @@ const LEVELS = [
     '                Q        C                         C                                            |',
     '    C        BBB    BB        QBQ                        QBQ           C C                       |',
     '                                                BB                          BBQ                 |',
-    '        PP       PP      PP          PP              PP        PP                  PP           |',
-    '                              BB              BB                     BBBBB              PP      |',
-    '  P                                                                                            |',
+    '              BBB        BBB          BBB              BBB        BBB                BBB         |',
+    '                              BB              BB                     BBBBB              BB      |',
+    'P            P                    P                P                    P                       |',
     'GGGG  GGG   GGGG   GGG   GGGGGGG  GGGG   GGGGG   GGGGG  GGGGG   GGGGGGG   GGGG  GGGGGGGGGGGGGGG',
     'GGGG  GGG   GGGG   GGG   GGGGGGG  GGGG   GGGGG   GGGGG  GGGGG   GGGGGGG   GGGG  GGGGGGGGGGGGGGG',
   ],
@@ -175,7 +175,7 @@ function loadLevel(n) {
         tiles.push({ x: px, y: py, type: 'pipe_top' });
         tiles.push({ x: px, y: py + T, type: 'pipe_body' });
         // spawn enemy near pipe
-        enemies.push({ x: px + T * 2, y: py - 24, vx: -1, w: 24, h: 24, alive: true, stomped: false, stompTimer: 0 });
+        enemies.push({ x: px + T * 2, y: py - 24, vx: -1, vy: 0, w: 24, h: 24, alive: true, stomped: false, stompTimer: 0 });
       }
       else if (ch === 'F') flagX = px;
       else if (ch === '|') tiles.push({ x: px, y: py, type: 'flagpole' });
@@ -370,8 +370,8 @@ function update() {
       if (e.stompTimer <= 0) e.alive = false;
       continue;
     }
+    // Enemy horizontal movement
     e.x += e.vx;
-    // Enemy-tile collision
     for (const t of getTilesNear(e.x, e.y)) {
       if (!isSolid(t)) continue;
       if (boxOverlap(e, { x: t.x, y: t.y, w: T, h: T })) {
@@ -380,15 +380,31 @@ function update() {
         e.vx *= -1;
       }
     }
+
     // Enemy gravity
+    e.vy += 0.4;
+    if (e.vy > 10) e.vy = 10;
+    e.y += e.vy;
+
+    // Enemy ground collision
     let onFloor = false;
-    for (const t of getTilesNear(e.x, e.y + e.h + 2)) {
+    for (const t of getTilesNear(e.x, e.y)) {
       if (!isSolid(t)) continue;
-      if (e.x + e.w > t.x && e.x < t.x + T && e.y + e.h <= t.y + 4 && e.y + e.h >= t.y - 4) {
-        onFloor = true;
-        e.y = t.y - e.h;
+      if (boxOverlap(e, { x: t.x, y: t.y, w: T, h: T })) {
+        if (e.vy >= 0) {
+          e.y = t.y - e.h;
+          e.vy = 0;
+          onFloor = true;
+        }
       }
     }
+
+    // Kill if fallen off map
+    if (e.y > canvas.height + 100) {
+      e.alive = false;
+      continue;
+    }
+
     // Edge detection — reverse at platform edges
     if (onFloor) {
       const checkX = e.vx > 0 ? e.x + e.w + 2 : e.x - 2;
@@ -458,11 +474,10 @@ function drawPixelChar(x, y, facing) {
 
   ctx.save();
   if (facing < 0) {
-    ctx.translate(dx + player.w, 0);
+    ctx.translate(dx + player.w, dy);
     ctx.scale(-1, 1);
-    ctx.translate(0, 0);
   } else {
-    ctx.translate(dx, 0);
+    ctx.translate(dx, dy);
   }
 
   // Body
